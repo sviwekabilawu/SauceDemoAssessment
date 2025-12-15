@@ -1,6 +1,6 @@
 package Utils;
 
-import io.cucumber.java.an.E;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -14,12 +14,15 @@ public class BrowserFactory {
 
         switch (browserChoice.toLowerCase()){
             case "chrome":
-            driver = new ChromeDriver();
-            break;
+                WebDriverManager.chromedriver().setup();
+                driver = new ChromeDriver();
+                break;
             case "firefox":
-            driver = new FirefoxDriver();
-            break;
+                WebDriverManager.firefoxdriver().setup();
+                driver = new FirefoxDriver();
+                break;
             default:
+                WebDriverManager.edgedriver().setup();
                 driver = new EdgeDriver();
                 break;
         }

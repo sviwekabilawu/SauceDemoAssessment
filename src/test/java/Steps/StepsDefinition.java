@@ -2,7 +2,11 @@ package Steps;
 
 import Utils.Base;
 import io.cucumber.java.After;
+import io.cucumber.java.AfterStep;
+import io.cucumber.java.Scenario;
 import io.cucumber.java.en.* ;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 
 public class StepsDefinition extends Base {
 
@@ -26,10 +30,72 @@ public class StepsDefinition extends Base {
         landingPage.verifyProductTitleIsDisplayed();
 
     }
+    @When("I add an item to the cart")
+    public void i_add_an_item_to_the_cart() {
+        landingPage.clickAddToCartButton();
+
+    }
+    @When("Click on the cart button")
+    public void click_on_the_cart_button() {
+        landingPage.clickCartButton();
+
+    }
+    @Then("I verify the item is in the cart")
+    public void i_verify_the_item_is_in_the_cart() {
+
+    }
+    @When("I click on the checkout button")
+    public void i_click_on_the_checkout_button() {
+        yourCartPage.clickCheckoutButton();
+
+    }
+
+
+    @AfterStep
+    public void addScreenshot(Scenario scenario){
+        if (scenario.isFailed()){
+            final byte[] screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+            scenario.attach(screenshot, "image/png", "screenshot");
+       }
+    }
 
     @After
     public void close_browser(){
         driver.quit();
+    }
+
+    @Then("The your information page is displayed")
+    public void theYourInformationPageIsDisplayed() {
+       informationPage.verifyYourInformationHeadingIsDisplayed();
+    }
+
+    @When("I enter first name {string}")
+    public void iEnterFirstName(String firstname) {
+        informationPage.enterFirstName(firstname);
+
+    }
+
+    @And("I enter last name {string}")
+    public void iEnterLastName(String lastname) {
+        informationPage.enterLastName(lastname);
+
+    }
+
+    @And("I enter postal code {string}")
+    public void iEnterPostalCode(String postalcode) {
+        informationPage.enterPostalCode(postalcode);
+
+    }
+
+    @And("I click the continue button")
+    public void iClickTheContinueButton() {
+        informationPage.clickContinueBtn();
+
+    }
+
+    @Then("I should be navigated to the overview page")
+    public void iShouldBeNavigatedToTheOverviewPage() {
+
     }
 
 }
